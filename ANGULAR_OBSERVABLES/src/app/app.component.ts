@@ -1,12 +1,13 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { from, fromEvent, Observable, of } from 'rxjs';
+import { filter, from, fromEvent, map, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent //implements AfterViewInit 
+{
   title = 'ANGULAR_OBSERVABLES';
   data: any[] = [];
 
@@ -158,29 +159,57 @@ export class AppComponent implements AfterViewInit {
 
   // ------------------------------------------
   // using fromEvent() operator
-  @ViewChild('btnRef')
-  btnRef : ElementRef;
 
-  createBtnObs;
+  // @ViewChild('btnRef')
+  // btnRef : ElementRef;
 
-  buttonClicked(){
-    let cnt = 0;
-    this.createBtnObs = fromEvent(this.btnRef.nativeElement, 'click')
-                                .subscribe({
-                                  next: (data: any)=>{
-                                    console.log(data);
-                                    this.addChild(++cnt);
-                                  }
-                                })
-  }
+  // createBtnObs;
 
-  ngAfterViewInit(){
-    this.buttonClicked();
-  }
-  addChild(cnt){
-    let div = document.createElement('div');
-    div.innerText = "item " + cnt;
-    document.getElementById('container').appendChild(div);
+  // buttonClicked(){
+  //   let cnt = 0;
+  //   this.createBtnObs = fromEvent(this.btnRef.nativeElement, 'click')
+  //                               .subscribe({
+  //                                 next: (data: any)=>{
+  //                                   console.log(data);
+  //                                   this.addChild(++cnt);
+  //                                 }
+  //                               })
+  // }
+
+  // ngAfterViewInit(){
+  //   this.buttonClicked();
+  // }
+  // addChild(cnt){
+  //   let div = document.createElement('div');
+  //   div.innerText = "item " + cnt;
+  //   document.getElementById('container').appendChild(div);
+  // }
+
+
+  // Using map() & filter()
+  
+  array = [1,2,3,4,5];
+  myObservable = from(this.array).pipe(map((x)=>{
+    return x * 10;
+  }));
+
+  filteredObs = this.myObservable.pipe(filter((x)=>{
+    return x % 4 === 0;
+  }))
+
+  GetAsyncData(){
+    this.filteredObs.subscribe({
+      next: (val: any)=>{
+        this.data.push(val);
+        console.log(this.data)
+      },
+      error(err){
+        alert(err.message)
+      },
+      complete(){
+        alert("all data streamed successfully");
+      }
+    });
   }
 
 
