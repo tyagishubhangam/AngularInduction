@@ -1,0 +1,11 @@
+<div class="admin-container">
+    Name:<input type="text" placeholder="Enter name" [(ngModel)] = "name"]>
+    <br>
+    Gender:
+    <select name="gender" [(ngModel)]="gender">
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+    </select>
+
+    <button (click)="AddUser()">Add User</button>
+</div>

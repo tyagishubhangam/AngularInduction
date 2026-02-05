@@ -1,0 +1,9 @@
+<div class="users-section">
+    @for(user of usersList; track $index){
+        <div class="user-details">
+            <div class="detail">Name: {{user.name}}</div>
+            <div class="detail">Gender: {{user.gender}}</div>
+            <button (click)="ShowDetails(user)">ShowDetails</button>
+        </div>
+    }
+</div>

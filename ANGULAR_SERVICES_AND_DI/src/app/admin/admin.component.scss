@@ -1,0 +1,13 @@
+.admin-container{
+    border: 5px solid blue;
+    border-radius: 10px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+}
+input{
+    height: 1.5rem;
+}
+select {
+    height: 2rem;
+}
